@@ -2,7 +2,6 @@ fastapi
 httpx
 
 # Backends
-ormar
 tortoise-orm==0.18.1
 databases
 aiosqlite
