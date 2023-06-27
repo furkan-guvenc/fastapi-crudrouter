@@ -14,7 +14,7 @@ class AttrDict(dict):  # type: ignore
 
 def get_pk_type(schema: Type[PYDANTIC_SCHEMA], pk_field: str) -> Any:
     try:
-        return schema.__fields__[pk_field].type_
+        return schema.model_fields[pk_field].annotation
     except KeyError:
         return int
 
@@ -27,9 +27,9 @@ def schema_factory(
     """
 
     fields = {
-        f.name: (f.type_, ...)
-        for f in schema_cls.__fields__.values()
-        if f.name != pk_field_name
+        f_name: (f.annotation, ...)
+        for f_name, f in schema_cls.model_fields.items()
+        if f_name != pk_field_name
     }
 
     name = schema_cls.__name__ + name
